@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>银行ATM服务</title>
+</head>
+<body>
+
+  <div id="app">
+	   <form action="" method="post">
+	   		账号:<input type="text" name="accountid" v-model="accountid" /><br />
+	   		操作金额:<input type="text" name="balance" v-model="balance" /><br />
+	   		转入账号:<input type="text" name="inaccountid" v-model="inaccountid"  /><br />
+	   		<input type="button" value="存款" class="btn"  id="submit" @click="deposit()">
+	   		<input type="button" value="取款" class="btn"  id="submit" @click="withdraw()">
+	   		<input type="button" value="转账" class="btn"  id="submit" @click="transfer()">
+	   		<input type="button" value="查询" class="btn"  id="submit" @click="query()">
+	   		
+	   		<div id="result"></div>
+	   </form>
+  </div>
+
+
+ <!--  在网页里面引入javascript    大家注意顺序  -->
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/axios.js" ></script>
+	
+	<script type="text/javascript">
+	 let vm=new Vue({
+		el:"#app",
+		data:{
+			accountid:"",
+			balance:0.0,
+			inaccountid:""
+		},
+		methods:{
+			deposit:function(){
+				var params = new URLSearchParams();
+				params.append('accountid', this.accountid);
+				params.append('balance',this.balance);
+				axios.post('/bank/deposit', params).then( yc =>{
+					if(yc.data.code==0){
+						alert(yc.data.msg);
+					}else{
+						$("#result").html(yc.data.accountid+"号账户存款"+this.balance+"成功,余额:"+yc.data.balance);
+					}
+				});
+			},
+			withdraw:function(){
+				var params = new URLSearchParams();
+				params.append('accountid', this.accountid);
+				params.append('balance',this.balance);
+				axios.post('/bank/withdraw', params).then( yc =>{
+					if(yc.data.code==0){
+						alert(yc.data.msg);
+					}else{
+						$("#result").html(yc.data.accountid+"号账户取款"+this.balance+"成功,余额:"+yc.data.balance);
+					}
+				});
+			},
+			transfer:function(){
+				var params = new URLSearchParams();
+				params.append('accountid', this.accountid);
+				params.append('balance',this.balance);
+				params.append('inaccountid',this.inaccountid);
+				axios.post('/bank/transfer', params).then( yc =>{
+					if(yc.data.code==0){
+						alert(yc.data.msg);
+					}else{
+						$("#result").html(yc.data.accountid+"号账户转账"+this.balance+"至"+this.inaccountid+"成功,余额:"+yc.data.balance);
+					}
+				});
+			},
+			query:function(){
+				var params = new URLSearchParams();
+				params.append('accountid', this.accountid);
+				axios.post('/bank/query', params).then( yc =>{
+					if(yc.data.code==0){
+						alert(yc.data.msg);
+					}else{
+						$("#result").html(yc.data.accountid+"号账户,余额:"+yc.data.balance);
+					}
+				});
+			}
+		}
+	 });
+	</script>
+
+</body>
+</html>

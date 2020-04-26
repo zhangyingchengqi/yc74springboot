@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+</head>
+<body>
+
+
+	<script type="text/javascript">
+		function show1() {
+			$.ajax({
+				type : "POST",
+				url : "consumes/test.json",
+				contentType : "application/json",
+				//accept : "*/*",
+				success : function(data) {
+					alert(data);
+				}
+			});
+		}
+
+		function show2() {
+			$.ajax({
+				type : "POST",
+				url : "param/test.json",
+				data : "action=save&uname=zy&age=20",
+				headers : {
+					"uname" : "a"
+				},
+				success : function(data) {
+					alert(data);
+				}
+			});
+		}
+	</script>
+   <input type="button" value="show1" onclick="show1()" />
+   <input type="button" value="show2" onclick="show2()" />
+
+</body>
+</html>

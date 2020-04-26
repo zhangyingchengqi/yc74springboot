@@ -1,0 +1,10 @@
+server:  
+    port: 9090
+    session.timeout: 60000
+    servlet.contextpath: /hello  
+
+logging:
+    level.root: info
+    level.org: warn
+    level.com.yc: debug
+    file: /tmp/yc.log
